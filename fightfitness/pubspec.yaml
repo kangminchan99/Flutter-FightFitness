@@ -37,6 +37,7 @@ dependencies:
   kakao_flutter_sdk: ^1.9.0
   flutter_dotenv: ^5.1.0
   provider: ^6.1.2
+  flutter_native_splash: ^2.0.2
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +65,7 @@ flutter:
     # env
     - .env
     # images
+    - assets/images/intro_img.png
     - assets/images/fitness_main.jpg
     - assets/images/kakao_login_medium_wide.png
     - assets/images/kakao_login_medium_narrow.png
