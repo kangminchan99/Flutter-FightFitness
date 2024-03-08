@@ -38,6 +38,9 @@ dependencies:
   flutter_dotenv: ^5.1.0
   provider: ^6.1.2
   flutter_native_splash: ^2.0.2
+  firebase_core: ^2.24.2
+  flutter_secure_storage: ^9.0.0 # 자동 로그인 기능 구현
+  firebase_auth: ^4.16.0
 
 dev_dependencies:
   flutter_test:
