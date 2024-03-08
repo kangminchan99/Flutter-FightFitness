@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "753577900079",
+    "project_id": "fightfitness-8df7e",
+    "storage_bucket": "fightfitness-8df7e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:753577900079:android:6a2139e9e2edd3a2bdeeda",
+        "android_client_info": {
+          "package_name": "com.example.fightfitness"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_lPoXWH8Bc-aGKmCvlSFAfWXbWl1hBEQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
