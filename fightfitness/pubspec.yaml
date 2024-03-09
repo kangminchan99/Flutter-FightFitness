@@ -41,6 +41,8 @@ dependencies:
   firebase_core: ^2.24.2
   flutter_secure_storage: ^9.0.0 # 자동 로그인 기능 구현
   firebase_auth: ^4.16.0
+  firebase_storage: ^11.6.0 # 파이어베이스 db에 저장
+  cloud_firestore: ^4.14.0
 
 dev_dependencies:
   flutter_test:
