@@ -1,21 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fightfitness/model/user_model.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk_talk.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
-const storage = FlutterSecureStorage();
 
 class LoginProvider with ChangeNotifier {
-  // kakao_flutter_sdk
-  late User user;
-
-  // 유저 모델
-  late UserModel userModel;
-
   // 카카오 로그인
   Future<void> kakaoLogin() async {
     // 카카오톡이 깔려있는 경우
@@ -61,7 +49,6 @@ class LoginProvider with ChangeNotifier {
     // oidc를 사용해 Auth에 카카오 사용자 정보 저장
     var oidcKakao = firebase_auth.OAuthProvider('oidc.kakao');
 
-    user = await UserApi.instance.me();
     // 카카오 로그인에서 발급된 idToken
     var credential = oidcKakao.credential(
         idToken: token.idToken, accessToken: token.accessToken);
