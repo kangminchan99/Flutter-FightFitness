@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:fightfitness/provider/login_provider.dart';
-import 'package:fightfitness/screen/home/home_screen.dart';
+import 'package:fightfitness/screen/home/navigation_screen.dart';
 import 'package:fightfitness/screen/sing_up/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -21,29 +21,16 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     // 자동 로그인
-    // checkProgress();
+    checkProgress();
   }
 
-  // void checkProgress() async {
-  //   var progress = await storage.read(key: 'loginProgress');
-
-  //   switch (progress) {
-  //     case 'goSign':
-  //       Navigator.push(
-  //         context,
-  //         MaterialPageRoute(
-  //           builder: (context) => const SignUpScreen(),
-  //         ),
-  //       );
-  //     case 'home':
-  //       Navigator.push(
-  //         context,
-  //         MaterialPageRoute(
-  //           builder: (context) => const HomeScreen(),
-  //         ),
-  //       );
-  //   }
-  // }
+  void checkProgress() async {
+    var progress = await storage.read(key: 'loginProgress');
+    if (progress == "nav") {
+      if (!mounted) return;
+      Navigator.pushNamed(context, '/nav');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,9 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fightfitness/model/user_model.dart';
+import 'package:fightfitness/screen/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk_talk.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
 class LoginProvider with ChangeNotifier {
+  late User user;
+  late UserModel userModel;
   // 카카오 로그인
   Future<void> kakaoLogin() async {
     // 카카오톡이 깔려있는 경우
@@ -46,6 +51,9 @@ class LoginProvider with ChangeNotifier {
 
   //  토큰을 이용하여 파이어베이스에 사용자 정보 저장
   Future<void> addKakaoUserData(OAuthToken token) async {
+    // auth에 등록된 계정이 아닐경우
+
+    user = await UserApi.instance.me();
     // oidc를 사용해 Auth에 카카오 사용자 정보 저장
     var oidcKakao = firebase_auth.OAuthProvider('oidc.kakao');
 
@@ -57,30 +65,35 @@ class LoginProvider with ChangeNotifier {
         .FirebaseAuth.instance
         .signInWithCredential(credential);
 
-    // user uid
+    // user uid 가져오기
     print('user uid ${authResult.user!.uid}');
 
-    // 로그인 타입
-    print('provider id : ${credential.providerId}');
+    // // 로그인 타입
+    // print('provider id : ${credential.providerId}');
 
-    // id 토큰
-    print('idToken : ${credential.idToken}');
+    // // id 토큰
+    // print('idToken : ${credential.idToken}');
 
-    // 액세스 토큰
-    print('accessToken : ${credential.accessToken}');
-    // // 로컬에 로그인 진행상황 저장
-    // await storage.write(key: 'loginProgress', value: 'goSign');
+    // // 액세스 토큰
+    // print('accessToken : ${credential.accessToken}');
 
-    // var kakaoProfile = user.kakaoAccount!.profile!.nickname;
-    // dynamic data = {
-    //   'userUid': "",
-    //   'userName': kakaoProfile,
-    //   'userDeviceToken': "",
-    //   'userAge': 1,
-    // };
-    // userModel = UserModel.fromJson(data);
-    // await FirebaseFirestore.instance.collection("회원정보").doc('123').set(data);
+    // 로컬에 로그인 진행상황 저장
+    await storage.write(key: 'loginProgress', value: 'nav');
+
+    var kakaoProfile = user.kakaoAccount!.profile!.nickname;
+
+    dynamic data = {
+      'loginType': 'kakao',
+      'userUid': authResult.user!.uid,
+      'userName': kakaoProfile,
+      'userDeviceToken': "",
+      'userAge': 0,
+    };
+    userModel = UserModel.fromJson(data);
+
+    await FirebaseFirestore.instance
+        .collection("회원정보")
+        .doc(authResult.user!.uid)
+        .set(data);
   }
-
-  void saveKakaoUserDataToDatabase() {}
 }
