@@ -79,6 +79,11 @@ flutter:
     - assets/images/Apple_logo.png
     # gif
     - assets/gif/main_gif.gif
+    # nav
+    - assets/images/nav/battle.png
+    - assets/images/nav/board.png
+    - assets/images/nav/pet.png
+    - assets/images/nav/profile.png
 
   #   - images/a_dot_ham.jpeg
 

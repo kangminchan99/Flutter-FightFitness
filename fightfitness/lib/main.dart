@@ -1,6 +1,7 @@
 import 'package:fightfitness/firebase_options.dart';
+import 'package:fightfitness/provider/navigation_provider.dart';
+import 'package:fightfitness/screen/home/navigation_screen.dart';
 import 'package:fightfitness/screen/login/login_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -31,18 +32,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: ((context) => LoginProvider()),
-        )
+        ChangeNotifierProvider(create: ((context) => LoginProvider())),
+        ChangeNotifierProvider(create: (context) => NavigationProvider()),
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home: const LoginScreen(),
-      ),
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+          ),
+          // 라우터 설정
+          routes: {
+            "/nav": (context) => const NavScreen(),
+          },
+          home: const LoginScreen()),
     );
   }
 }
