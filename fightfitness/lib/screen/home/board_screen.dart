@@ -12,7 +12,10 @@ class _BoardScreenState extends State<BoardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('board'),
+        title: Text(
+          '게시판',
+          style: TextStyle(fontFamily: 'Jamsil4'),
+        ),
         automaticallyImplyLeading: false,
       ),
     );
