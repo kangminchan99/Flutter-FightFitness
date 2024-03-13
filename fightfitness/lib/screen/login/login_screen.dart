@@ -32,6 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  void update() => setState(() {});
   @override
   Widget build(BuildContext context) {
     var loginProvider = context.read<LoginProvider>();
@@ -101,10 +102,30 @@ class _LoginScreenState extends State<LoginScreen> {
                   )
                 : const SizedBox(),
             const SizedBox(height: 20),
-
             GestureDetector(
               onTap: () async {
+                // 카카오 로그인
                 await loginProvider.kakaoLogin();
+                checkProgress();
+                if (!mounted) return;
+                if (loginProvider.currentPage == CurrentPage.main) {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.blue,
+                        ),
+                      );
+                    },
+                  );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const NavScreen(),
+                    ),
+                  );
+                }
               },
               child: SizedBox(
                 width: 300,

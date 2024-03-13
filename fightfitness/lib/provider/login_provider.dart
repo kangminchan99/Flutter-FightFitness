@@ -6,9 +6,18 @@ import 'package:flutter/services.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk_talk.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
+// login - 아직 회원가입 중
+// main - 회원가입 완료
+enum CurrentPage { login, main }
+
 class LoginProvider with ChangeNotifier {
   late User user;
   late UserModel userModel;
+
+  // 현재 페이지로 페이지 이동
+  CurrentPage _currentPage = CurrentPage.login;
+  CurrentPage get currentPage => _currentPage;
+
   // 카카오 로그인
   Future<void> kakaoLogin() async {
     // 카카오톡이 깔려있는 경우
@@ -17,7 +26,7 @@ class LoginProvider with ChangeNotifier {
         // 카카오톡으로 로그인 성공 시 토큰 발급받아 저장
         OAuthToken token = await UserApi.instance.loginWithKakaoTalk();
         addKakaoUserData(token);
-
+        _currentPage = CurrentPage.main;
         notifyListeners();
       } catch (e) {
         debugPrint('kakao login fail.. ${e.toString()}');
@@ -30,6 +39,7 @@ class LoginProvider with ChangeNotifier {
         try {
           OAuthToken token = await UserApi.instance.loginWithKakaoAccount();
           addKakaoUserData(token);
+          _currentPage = CurrentPage.main;
           debugPrint('카카오 계정으로 로그인 성공');
           notifyListeners();
         } catch (e) {
@@ -41,6 +51,7 @@ class LoginProvider with ChangeNotifier {
       try {
         OAuthToken token = await UserApi.instance.loginWithKakaoAccount();
         addKakaoUserData(token);
+        _currentPage = CurrentPage.main;
         notifyListeners();
       } catch (e) {
         debugPrint('카카오 계정으로 로그인 실패 ${e.toString()}');
@@ -95,5 +106,8 @@ class LoginProvider with ChangeNotifier {
         .collection("회원정보")
         .doc(authResult.user!.uid)
         .set(data);
+
+    // // 로그인 성공 페이지 전환
+    // _currentPage = CurrentPage.main;
   }
 }

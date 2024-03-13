@@ -12,7 +12,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('profile'),
+        title: Text(
+          '내 정보',
+          style: TextStyle(fontFamily: 'Jamsil4'),
+        ),
         automaticallyImplyLeading: false,
       ),
     );

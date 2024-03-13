@@ -12,7 +12,10 @@ class _BattleScreenState extends State<BattleScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('battle'),
+        title: Text(
+          '전투',
+          style: TextStyle(fontFamily: 'Jamsil4'),
+        ),
         automaticallyImplyLeading: false,
       ),
     );

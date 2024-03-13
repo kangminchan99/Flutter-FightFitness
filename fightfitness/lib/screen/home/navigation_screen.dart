@@ -5,7 +5,7 @@ import 'package:fightfitness/screen/home/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'pet_screen.dart';
+import 'pet/pet_screen.dart';
 
 class NavScreen extends StatefulWidget {
   const NavScreen({super.key});
