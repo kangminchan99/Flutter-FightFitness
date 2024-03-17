@@ -25,7 +25,9 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void checkProgress() async {
+    // await storage.delete(key: 'loginProgress');
     var progress = await storage.read(key: 'loginProgress');
+    storage.delete(key: 'loginProgress');
     if (progress == "nav") {
       if (!mounted) return;
       Navigator.pushNamed(context, '/nav');
