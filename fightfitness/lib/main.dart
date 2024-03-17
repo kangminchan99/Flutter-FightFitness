@@ -1,4 +1,5 @@
 import 'package:fightfitness/firebase_options.dart';
+import 'package:fightfitness/provider/inbody_check_provider.dart';
 import 'package:fightfitness/provider/navigation_provider.dart';
 import 'package:fightfitness/screen/home/navigation_screen.dart';
 import 'package:fightfitness/screen/login/login_screen.dart';
@@ -32,8 +33,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        // 로그인
         ChangeNotifierProvider(create: ((context) => LoginProvider())),
+        // 바텀 네비게이션
         ChangeNotifierProvider(create: (context) => NavigationProvider()),
+        // 인바디 체크
+        ChangeNotifierProvider(create: (context) => InbodyCheckProvider()),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,

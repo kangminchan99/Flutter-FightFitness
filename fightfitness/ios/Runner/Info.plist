@@ -63,5 +63,13 @@
 		</array>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		<!-- 이미지 피커 권한 설정 -->
+		<key>NSCameraUsageDescription</key>
+		<string>"FitPet"이 사진을 촬영 하여 인바디 정보를 전달 또는 게시글에 사진을 촬영하여 첨부 등록하는 기능 사용을 위해 사진 라이브러리에 접근하도록 허용합니다.</string>
+		<key>NSMicrophoneUsageDescription</key>
+		<string>Used to capture audio for image pick plugin</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>"FitPet"이 사진을 촬영 하여 인바디 정보를 전달 또는 게시글에 사진을 촬영하여 첨부 등록하는 기능 사용을 위해 사진 라이브러리에 접근하도록 허용합니다.</string>
+		<!--  -->
 	</dict>
 </plist>
