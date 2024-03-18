@@ -1,4 +1,6 @@
+import 'package:fightfitness/provider/login_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'certification_pet_screen.dart';
 
@@ -12,6 +14,7 @@ class PetScreen extends StatefulWidget {
 class _PetScreenState extends State<PetScreen> {
   @override
   Widget build(BuildContext context) {
+    final loginProvider = Provider.of<LoginProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -25,10 +28,11 @@ class _PetScreenState extends State<PetScreen> {
           children: [
             GestureDetector(
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const CertPetScreen()));
+                print(loginProvider.userModel.userUid);
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) => const CertPetScreen()));
               },
               child: const CircleAvatar(
                 radius: 70,

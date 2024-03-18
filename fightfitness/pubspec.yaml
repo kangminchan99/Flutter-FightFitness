@@ -79,6 +79,7 @@ flutter:
     - assets/images/kakao_login_large_wide.png
     - assets/images/kakao_login_large_narrow.png
     - assets/images/Apple_logo.png
+    - assets/images/close.png
     # gif
     - assets/gif/main_gif.gif
     # nav
