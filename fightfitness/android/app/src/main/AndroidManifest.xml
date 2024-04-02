@@ -2,9 +2,10 @@
 
 
     <!-- android:requestLegacyExternalStorage="true" : 안드로이드 이미지 피커 권한 설정 -->
+    <!-- android:label="FitPet" 안드로이드 앱 이름 변경  -->
     <application
         android:requestLegacyExternalStorage="true" 
-        android:label="fightfitness"
+        android:label="FitPet"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
