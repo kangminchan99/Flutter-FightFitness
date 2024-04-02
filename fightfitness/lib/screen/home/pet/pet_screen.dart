@@ -32,14 +32,14 @@ class _PetScreenState extends State<PetScreen> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    print(loginProvider.userModel.userUid);
+                    // print(loginProvider.userModel.userUid);
 
-                    // Navigator.push(
-                    //   context,
-                    //   PageTransition(
-                    //       child: const CertPetScreen(),
-                    //       type: PageTransitionType.bottomToTop),
-                    // );
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                          child: const CertPetScreen(),
+                          type: PageTransitionType.bottomToTop),
+                    );
                   },
                   child: const CircleAvatar(
                     radius: 70,
