@@ -1,6 +1,6 @@
 import 'package:fightfitness/provider/navigation_provider.dart';
 import 'package:fightfitness/screen/home/battle_screen.dart';
-import 'package:fightfitness/screen/home/board_screen.dart';
+import 'package:fightfitness/screen/home/board/board_screen.dart';
 import 'package:fightfitness/screen/home/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

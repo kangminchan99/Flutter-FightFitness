@@ -90,6 +90,7 @@ class LoginProvider with ChangeNotifier {
 
     // 로컬에 로그인 진행상황 저장
     await storage.write(key: 'loginProgress', value: 'nav');
+    await storage.write(key: 'userUid', value: authResult.user!.uid);
 
     var kakaoProfile = user.kakaoAccount!.profile!.nickname;
 

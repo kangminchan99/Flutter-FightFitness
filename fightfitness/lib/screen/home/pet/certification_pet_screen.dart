@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:fightfitness/provider/inbody_check_provider.dart';
 import 'package:fightfitness/provider/login_provider.dart';
+import 'package:fightfitness/screen/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +17,11 @@ class CertPetScreen extends StatefulWidget {
 
 class _CertPetScreenState extends State<CertPetScreen> {
   void update() => setState(() {});
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final inbodyProvider = Provider.of<InbodyCheckProvider>(context);
@@ -45,9 +51,27 @@ class _CertPetScreenState extends State<CertPetScreen> {
                           fontSize: 16,
                           fontFamily: 'Jamsil3',
                         ),
-                        btnOkOnPress: () {
-                          inbodyProvider
-                              .addInbodyImg(loginProvider.userModel.userUid);
+                        btnOkOnPress: () async {
+                          showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (BuildContext context) {
+                                return const Center(
+                                  child: CircularProgressIndicator(
+                                    color: Colors.blue,
+                                  ),
+                                );
+                              });
+                          // inbodyProvider
+                          //     .addInbodyImg(loginProvider.userModel.userUid);
+                          var userUid = await storage.read(key: 'userUid');
+                          await inbodyProvider.addInbodyImg(userUid!);
+
+                          inbodyProvider.clearInbodyImg();
+
+                          if (!mounted) return;
+                          Navigator.pop(context);
+                          Navigator.pop(context);
                         },
                         btnOkIcon: Icons.check_circle,
                         btnCancelOnPress: () {},
@@ -67,18 +91,38 @@ class _CertPetScreenState extends State<CertPetScreen> {
           child: Column(
             children: [
               inbodyProvider.inbodyImg == null
-                  ? Container(
+                  ? SizedBox(
                       height: MediaQuery.of(context).size.width,
                       width: MediaQuery.of(context).size.width - 30,
-                      color: Colors.black,
-                    )
-                  : SizedBox(
-                      height: MediaQuery.of(context).size.width,
-                      width: MediaQuery.of(context).size.width - 30,
-                      child: Image.file(
-                        File(inbodyProvider.inbodyImg!.path),
-                        fit: BoxFit.cover,
+                      child: Image.asset(
+                        'assets/images/pet_info/default_pet.jpg',
+                        fit: BoxFit.fill,
                       ),
+                    )
+                  : Stack(
+                      alignment: Alignment.topRight,
+                      children: [
+                        SizedBox(
+                          height: MediaQuery.of(context).size.width,
+                          width: MediaQuery.of(context).size.width - 30,
+                          child: Image.file(
+                            File(inbodyProvider.inbodyImg!.path),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 10, top: 10),
+                          child: GestureDetector(
+                            onTap: () {
+                              inbodyProvider.clearInbodyImg();
+                            },
+                            child: Image.asset(
+                              'assets/images/close.png',
+                              scale: 1.5,
+                            ),
+                          ),
+                        )
+                      ],
                     ),
               const SizedBox(height: 20),
               const Text(

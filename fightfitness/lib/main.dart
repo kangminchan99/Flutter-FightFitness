@@ -1,4 +1,5 @@
 import 'package:fightfitness/firebase_options.dart';
+import 'package:fightfitness/provider/board_provider.dart';
 import 'package:fightfitness/provider/inbody_check_provider.dart';
 import 'package:fightfitness/provider/navigation_provider.dart';
 import 'package:fightfitness/screen/home/navigation_screen.dart';
@@ -39,6 +40,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => NavigationProvider()),
         // 인바디 체크
         ChangeNotifierProvider(create: (context) => InbodyCheckProvider()),
+        // 게시판
+        ChangeNotifierProvider(create: (context) => BoardProvider()),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
