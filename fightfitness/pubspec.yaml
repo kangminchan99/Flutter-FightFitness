@@ -46,6 +46,7 @@ dependencies:
   image_picker: ^1.0.7
   awesome_dialog: ^3.2.0
   page_transition: ^2.1.0
+  sign_in_with_apple: ^5.0.0
 
 dev_dependencies:
   flutter_test:
