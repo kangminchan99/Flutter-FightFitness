@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk_talk.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 // login - 아직 회원가입 중
 // main - 회원가입 완료
@@ -110,5 +111,26 @@ class LoginProvider with ChangeNotifier {
 
     // // 로그인 성공 페이지 전환
     // _currentPage = CurrentPage.main;
+  }
+
+  ////     apple login     /////
+
+  Future<void> appleLogin() async {
+    final AuthorizationCredentialAppleID credentialAppleID =
+        await SignInWithApple.getAppleIDCredential(
+      scopes: [
+        AppleIDAuthorizationScopes.email,
+        AppleIDAuthorizationScopes.fullName,
+      ],
+    );
+
+    final firebase_auth.OAuthCredential credential =
+        firebase_auth.OAuthProvider('apple.com').credential(
+      idToken: credentialAppleID.identityToken,
+      accessToken: credentialAppleID.authorizationCode,
+    );
+
+    await firebase_auth.FirebaseAuth.instance.signInWithCredential(credential);
+    notifyListeners();
   }
 }

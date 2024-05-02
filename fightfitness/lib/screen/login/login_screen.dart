@@ -66,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Platform.isIOS
                 ? GestureDetector(
                     onTap: () {
-                      debugPrint('click login apple');
+                      loginProvider.appleLogin();
                     },
                     child: Container(
                       width: 300,
@@ -121,6 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       );
                     },
                   );
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(
