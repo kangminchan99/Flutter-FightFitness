@@ -1,4 +1,8 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crypto/crypto.dart';
 import 'package:fightfitness/model/user_model.dart';
 import 'package:fightfitness/screen/login/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -115,22 +119,51 @@ class LoginProvider with ChangeNotifier {
 
   ////     apple login     /////
 
-  Future<void> appleLogin() async {
-    final AuthorizationCredentialAppleID credentialAppleID =
-        await SignInWithApple.getAppleIDCredential(
+  /// nonce - 임의 생성 암호화 토큰
+  /// 기본 길이 32로 설정
+  String generateNonce([int length = 32]) {
+    const charset =
+        '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
+
+    // 안전한 랜덤 값 생성
+    final random = Random.secure();
+    // 리스트애 기본 길이만큼 랜덤으로 생성하여 저장후 문자열로 반환
+    return List.generate(
+        length, (index) => charset[random.nextInt(charset.length)]).join();
+  }
+
+  String sha256ofString(String input) {
+    // 입력값을 utf8형식으로 암호화
+    final bytes = utf8.encode(input);
+    // sha256 변환
+    final digest = sha256.convert(bytes);
+    // 해시값 문자열로 변환
+    return digest.toString();
+  }
+
+  // final - 실행 후 값 변경이 가능하나 한번 바꾸면 바꿀 수 X
+  final _fireAuthInstance = firebase_auth.FirebaseAuth.instance;
+
+  // UserCredential - 유저 정보를 담는 객체나 데이터 구조
+  Future<firebase_auth.UserCredential> appleLogin() async {
+    final rawNonce = generateNonce();
+    final nonce = sha256ofString(rawNonce);
+
+    final appleCredential = await SignInWithApple.getAppleIDCredential(
       scopes: [
         AppleIDAuthorizationScopes.email,
         AppleIDAuthorizationScopes.fullName,
       ],
+      nonce: nonce,
     );
 
-    final firebase_auth.OAuthCredential credential =
-        firebase_auth.OAuthProvider('apple.com').credential(
-      idToken: credentialAppleID.identityToken,
-      accessToken: credentialAppleID.authorizationCode,
+    //  credential을 담은후 OAuth 생성
+    final oauthCredential = firebase_auth.OAuthProvider('apple.com').credential(
+      idToken: appleCredential.identityToken,
+      rawNonce: rawNonce,
     );
 
-    await firebase_auth.FirebaseAuth.instance.signInWithCredential(credential);
     notifyListeners();
+    return await _fireAuthInstance.signInWithCredential(oauthCredential);
   }
 }

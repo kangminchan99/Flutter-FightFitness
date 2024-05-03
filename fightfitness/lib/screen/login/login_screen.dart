@@ -109,25 +109,28 @@ class _LoginScreenState extends State<LoginScreen> {
                 // 카카오 로그인
                 await loginProvider.kakaoLogin();
                 checkProgress();
-                if (!mounted) return;
                 if (loginProvider.currentPage == CurrentPage.main) {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return const Center(
-                        child: CircularProgressIndicator(
-                          color: Colors.blue,
-                        ),
-                      );
-                    },
-                  );
+                  if (context.mounted) {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.blue,
+                          ),
+                        );
+                      },
+                    );
+                  }
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const NavScreen(),
-                    ),
-                  );
+                  if (context.mounted) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const NavScreen(),
+                      ),
+                    );
+                  }
                 }
               },
               child: SizedBox(
